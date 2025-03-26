@@ -3,7 +3,6 @@
 const customName = document.getElementById('customname');
 const randomize = document.querySelector('.randomize');
 const story = document.querySelector('.story');
-const storyText = document.querySelector('.story-text');
 
 function randomValueFromArray(array){
   const random = Math.floor(Math.random()*array.length);
@@ -12,24 +11,24 @@ function randomValueFromArray(array){
 
 // 2. RAW TEXT STRINGS
 
-const storyTextContent = "It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.";
+const storyText = "It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.";
 
 const insertX = [
-  "Quantum Explorer Zeta",
-  "Commander Nebula",
-  "Galactic Nomad Xion"
+  "Willy the Goblin",
+  "Big Daddy",
+  "Father Christmas"
 ];
 
 const insertY = [
-  "the abandoned space station",
-  "the quantum realm nexus",
-  "the interstellar bazaar"
+  "the soup kitchen",
+  "Disneyland",
+  "the White House"
 ];
 
 const insertZ = [
-  "phased out of existence temporarily",
-  "transformed into pure cosmic energy",
-  "opened a wormhole with a mere thought"
+  "spontaneously combusted",
+  "melted into a puddle on the sidewalk",
+  "turned into a slug and crawled away"
 ];
 
 // 3. EVENT LISTENER AND PARTIAL FUNCTION DEFINITION
@@ -38,15 +37,12 @@ randomize.addEventListener('click', result);
 
 function result() {
   // Add loading animation to button
-  randomize.textContent = "PROCESSING...";
+  randomize.textContent = "Generating...";
   randomize.disabled = true;
-  
-  // Glitch effect animation on button
-  randomize.classList.add('processing');
   
   // Small delay to show the loading state
   setTimeout(() => {
-    let newStory = storyTextContent;
+    let newStory = storyText;
     const xItem = randomValueFromArray(insertX);
     const yItem = randomValueFromArray(insertY);
     const zItem = randomValueFromArray(insertZ);
@@ -68,41 +64,20 @@ function result() {
       newStory = newStory.replaceAll('300 pounds', weight);
     }
 
-    // Add typewriter effect to story text
-    typewriterEffect(newStory);
+    // Reset story visibility
+    story.style.visibility = 'visible';
+    story.classList.add('visible');
+    story.textContent = newStory;
     
-    // Reset button after story is shown
-    setTimeout(() => {
-      randomize.textContent = "Initialize Sequence";
-      randomize.disabled = false;
-      randomize.classList.remove('processing');
-    }, 1000);
+    // Reset button
+    randomize.textContent = "Generate random story";
+    randomize.disabled = false;
     
-  }, 1000);
-}
-
-// Add typewriter effect
-function typewriterEffect(text) {
-  // First make the container visible
-  story.classList.add('visible');
-  
-  // Clear any existing text
-  storyText.textContent = '';
-  
-  // Set up counter and interval for typewriter effect
-  let i = 0;
-  const speed = 30; // typing speed in ms
-  
-  function type() {
-    if (i < text.length) {
-      storyText.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
+    // Scroll to the story if needed
+    if (window.innerHeight < 768) {
+      story.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-  }
-  
-  // Start the typewriter effect
-  setTimeout(type, 500);
+  }, 400);
 }
 
 // Add some interactivity for input field
@@ -112,31 +87,6 @@ customName.addEventListener('focus', function() {
 
 customName.addEventListener('blur', function() {
   if (!this.value) {
-    this.placeholder = 'Enter subject name...';
+    this.placeholder = 'Enter a name...';
   }
 });
-
-// Add extra CSS for the processing animation
-document.head.insertAdjacentHTML('beforeend', `
-  <style>
-    .cosmic-button.processing {
-      background: linear-gradient(90deg, var(--accent-color), var(--highlight));
-      animation: glitch 0.5s infinite alternate;
-    }
-    
-    @keyframes glitch {
-      0% {
-        text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-      }
-      15% {
-        text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75);
-      }
-      50% {
-        text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75);
-      }
-      100% {
-        text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
-      }
-    }
-  </style>
-`);
