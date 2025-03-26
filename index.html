@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Silly story generator</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+      }
+
+      .container {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        transition: transform 0.3s ease;
+      }
+
+      .container:hover {
+        transform: translateY(-5px);
+      }
+
+      h1 {
+        text-align: center;
+        color: #6366f1;
+        margin-bottom: 25px;
+        font-weight: 700;
+      }
+
+      label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+        color: #4b5563;
+      }
+
+      .form-group {
+        padding-bottom: 20px;
+      }
+
+      input[type="text"] {
+        padding: 12px;
+        width: 100%;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+      }
+
+      input[type="text"]:focus {
+        border-color: #6366f1;
+        outline: none;
+      }
+
+      .radio-group {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 8px;
+      }
+
+      .radio-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      input[type="radio"] {
+        margin-right: 8px;
+        accent-color: #6366f1;
+        cursor: pointer;
+      }
+
+      .button-container {
+        text-align: center;
+      }
+
+      button.randomize {
+        background-color: #6366f1;
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        box-shadow: 0 4px 6px rgba(99, 102, 241, 0.25);
+      }
+
+      button.randomize:hover {
+        background-color: #4f46e5;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(99, 102, 241, 0.3);
+      }
+
+      button.randomize:active {
+        transform: translateY(0);
+      }
+
+      p.story {
+        background: linear-gradient(135deg, #ffc125 0%, #ff9900 100%);
+        color: #5e2612;
+        padding: 20px;
+        border-radius: 8px;
+        visibility: hidden;
+        margin-top: 25px;
+        font-size: 18px;
+        line-height: 1.6;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s ease;
+        opacity: 0;
+        position: relative;
+      }
+
+      p.story.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      p.story::before {
+        content: '"';
+        font-size: 60px;
+        color: rgba(94, 38, 18, 0.2);
+        position: absolute;
+        top: -10px;
+        left: 10px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 20px;
+        }
+        
+        button.randomize {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Silly Story Generator</h1>
+      
+      <div class="form-group">
+        <label for="customname">Enter custom name:</label>
+        <input id="customname" type="text" placeholder="Enter a name..." />
+      </div>
+      
+      <div class="form-group">
+        <label>Choose region:</label>
+        <div class="radio-group">
+          <div class="radio-container">
+            <input id="us" type="radio" name="ukus" value="us" checked />
+            <label for="us">US</label>
+          </div>
+          <div class="radio-container">
+            <input id="uk" type="radio" name="ukus" value="uk" />
+            <label for="uk">UK</label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="button-container">
+        <button class="randomize">Generate random story</button>
+      </div>
+      
+      <p class="story"></p>
+      
+      <footer>
+        Silly Story Generator - Have fun creating random stories!
+      </footer>
+    </div>
+    
+    <script src="main.js"></script>
+  </body>
+</html>
